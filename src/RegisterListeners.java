@@ -11,31 +11,29 @@ import org.jnativehook.mouse.NativeMouseWheelListener;
 public class RegisterListeners implements Runnable, NativeKeyListener, NativeMouseInputListener, NativeMouseWheelListener {
     private StringBuilder stringBuilder = new StringBuilder();
 	public void nativeKeyPressed(NativeKeyEvent e) {
-        stringBuilder.append("Key Pressed: "+NativeKeyEvent.getKeyText(e.getKeyCode()));
+        stringBuilder.append("Key Pressed: "+NativeKeyEvent.getKeyText(e.getKeyCode())+"\n");
 	}
 	public void nativeKeyReleased(NativeKeyEvent e) {
-        stringBuilder.append("Key Released: "+NativeKeyEvent.getKeyText(e.getKeyCode()));
+        stringBuilder.append("Key Released: "+NativeKeyEvent.getKeyText(e.getKeyCode())+"\n");
 	}
 	public void nativeKeyTyped(NativeKeyEvent e) {	
     }
     public void nativeMouseClicked(NativeMouseEvent e) {
-        stringBuilder.append("Mouse Clicked: "+e.getButton());   
 	}
 	public void nativeMousePressed(NativeMouseEvent e) {
-        stringBuilder.append("Mouse Pressed: "+e.getButton());
+        stringBuilder.append("Mouse Pressed: "+e.getButton()+"\n");
 	}
 	public void nativeMouseReleased(NativeMouseEvent e) {   
-        stringBuilder.append("Mouse Released: "+e.getButton());
+        stringBuilder.append("Mouse Released: "+e.getButton()+"\n");
 	}
 	public void nativeMouseMoved(NativeMouseEvent e) {
-        stringBuilder.append("Mouse Moved: " + e.getX() + ", " + e.getY());
+        stringBuilder.append("Mouse Moved: " + e.getX() + ", " + e.getY()+"\n");
 	}
-
 	public void nativeMouseDragged(NativeMouseEvent e) {
-        stringBuilder.append("Mouse Dragged: " + e.getX() + ", " + e.getY());
+        stringBuilder.append("Mouse Dragged: " + e.getX() + ", " + e.getY()+"\n");
     }
     public void nativeMouseWheelMoved(NativeMouseWheelEvent e) {
-        stringBuilder.append("Mosue Wheel Moved: " + e.getWheelRotation());
+        stringBuilder.append("Mosue Wheel Moved: " + e.getWheelRotation()+"\n");
 	}
 
 	public void run() {
