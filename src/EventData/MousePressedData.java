@@ -1,6 +1,7 @@
+package EventData;
 public class MousePressedData extends EventData{
-    int button;
-    MousePressedData(int button, long duration){
+    public int button;
+    public MousePressedData(int button, long duration){
         this.button = button;
         this.duration = duration;
     }

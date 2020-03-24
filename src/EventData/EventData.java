@@ -1,3 +1,4 @@
+package EventData;
 public class EventData{
-    long duration;
+    public long duration;
 }

@@ -1,5 +1,8 @@
+import java.util.LinkedList;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 import org.jnativehook.keyboard.NativeKeyEvent;
@@ -8,34 +11,57 @@ import org.jnativehook.mouse.NativeMouseEvent;
 import org.jnativehook.mouse.NativeMouseInputListener;
 import org.jnativehook.mouse.NativeMouseWheelEvent;
 import org.jnativehook.mouse.NativeMouseWheelListener;
+
+import EventData.EventData;
+import EventData.KeyPressedData;
+import EventData.KeyReleasedData;
+import EventData.MouseDraggedData;
+import EventData.MouseMovedData;
+import EventData.MousePressedData;
+import EventData.MouseReleasedData;
+import EventData.MouseWheelMovedData;
 public class RegisterListeners implements Runnable, NativeKeyListener, NativeMouseInputListener, NativeMouseWheelListener {
-    private StringBuilder stringBuilder = new StringBuilder();
+	private ReentrantLock lock = new ReentrantLock();
+	private LinkedList<EventData> list = new LinkedList<EventData>();
 	public void nativeKeyPressed(NativeKeyEvent e) {
-        stringBuilder.append("Key Pressed: "+NativeKeyEvent.getKeyText(e.getKeyCode())+"\n");
+		lock.lock();
+		list.add(new KeyPressedData(NativeKeyEvent.getKeyText(e.getKeyCode()),System.currentTimeMillis()));
+		lock.unlock();
 	}
 	public void nativeKeyReleased(NativeKeyEvent e) {
-        stringBuilder.append("Key Released: "+NativeKeyEvent.getKeyText(e.getKeyCode())+"\n");
+		lock.lock();
+		list.add(new KeyReleasedData(NativeKeyEvent.getKeyText(e.getKeyCode()),System.currentTimeMillis()));
+		lock.unlock();
 	}
 	public void nativeKeyTyped(NativeKeyEvent e) {	
     }
     public void nativeMouseClicked(NativeMouseEvent e) {
 	}
 	public void nativeMousePressed(NativeMouseEvent e) {
-        stringBuilder.append("Mouse Pressed: "+e.getButton()+"\n");
+		lock.lock();
+		list.add(new MousePressedData(e.getButton(),System.currentTimeMillis()));
+		lock.unlock();
 	}
 	public void nativeMouseReleased(NativeMouseEvent e) {   
-        stringBuilder.append("Mouse Released: "+e.getButton()+"\n");
+		lock.lock();
+		list.add(new MouseReleasedData(e.getButton(),System.currentTimeMillis()));
+		lock.unlock();
 	}
 	public void nativeMouseMoved(NativeMouseEvent e) {
-        stringBuilder.append("Mouse Moved: " + e.getX() + ", " + e.getY()+"\n");
+		lock.lock();
+		list.add(new MouseMovedData(e.getX(),e.getY(),System.currentTimeMillis()));
+		lock.unlock();
 	}
 	public void nativeMouseDragged(NativeMouseEvent e) {
-        stringBuilder.append("Mouse Dragged: " + e.getX() + ", " + e.getY()+"\n");
+		lock.lock();
+		list.add(new MouseDraggedData(e.getX(),e.getY(),System.currentTimeMillis()));
+		lock.unlock();
     }
     public void nativeMouseWheelMoved(NativeMouseWheelEvent e) {
-        stringBuilder.append("Mosue Wheel Moved: " + e.getWheelRotation()+"\n");
+		lock.lock();
+		list.add(new MouseWheelMovedData(e.getWheelRotation(),System.currentTimeMillis()));
+		lock.unlock();
 	}
-
 	public void run() {
 		try {
             Logger logger = Logger.getLogger(GlobalScreen.class.getPackage().getName());
@@ -48,10 +74,10 @@ public class RegisterListeners implements Runnable, NativeKeyListener, NativeMou
 			System.err.println(ex.getMessage());
 			System.exit(1);
 		}
-        RegisterListeners example = new RegisterListeners();
-        GlobalScreen.addNativeKeyListener(example);
-        GlobalScreen.addNativeMouseListener(example);
-        GlobalScreen.addNativeMouseMotionListener(example);
-		GlobalScreen.addNativeMouseWheelListener(example);
+		RegisterListeners obj = new RegisterListeners();
+        GlobalScreen.addNativeKeyListener(obj);
+        GlobalScreen.addNativeMouseListener(obj);
+        GlobalScreen.addNativeMouseMotionListener(obj);
+		GlobalScreen.addNativeMouseWheelListener(obj);
 	}
 }
