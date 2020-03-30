@@ -24,7 +24,19 @@ public class RegisterListeners implements Runnable, NativeKeyListener, NativeMou
 	public void nativeKeyPressed(NativeKeyEvent e) {
 		if(e.getRawCode()==161){
 			lock.lock();
-                        mylist.add(new KeyPressedData("Shift",System.currentTimeMillis()));
+        	mylist.add(new KeyPressedData("Shift",System.currentTimeMillis()));
+			lock.unlock();
+		}else if(e.getRawCode()==107){
+			lock.lock();
+        	mylist.add(new KeyPressedData("ADD",System.currentTimeMillis()));
+			lock.unlock();
+		}else if(e.getRawCode()==109){
+			lock.lock();
+        	mylist.add(new KeyPressedData("SUBTRACT",System.currentTimeMillis()));
+			lock.unlock();
+		}else if(e.getRawCode()==106){
+			lock.lock();
+        	mylist.add(new KeyPressedData("MULTIPLY",System.currentTimeMillis()));
 			lock.unlock();
 		}else if(!((e.getKeyText(e.getKeyCode())).equals("Undefined"))){
 			lock.lock();
@@ -35,7 +47,19 @@ public class RegisterListeners implements Runnable, NativeKeyListener, NativeMou
 	public void nativeKeyReleased(NativeKeyEvent e) {
 		if(e.getRawCode()==161){
 			lock.lock();
-                        mylist.add(new KeyReleasedData("Shift",System.currentTimeMillis()));
+        	mylist.add(new KeyReleasedData("Shift",System.currentTimeMillis()));
+			lock.unlock();
+		}else if(e.getRawCode()==107){
+			lock.lock();
+        	mylist.add(new KeyReleasedData("ADD",System.currentTimeMillis()));
+			lock.unlock();
+		}else if(e.getRawCode()==109){
+			lock.lock();
+        	mylist.add(new KeyReleasedData("SUBTRACT",System.currentTimeMillis()));
+			lock.unlock();
+		}else if(e.getRawCode()==106){
+			lock.lock();
+        	mylist.add(new KeyReleasedData("MULTIPLY",System.currentTimeMillis()));
 			lock.unlock();
 		}else if(!((e.getKeyText(e.getKeyCode())).equals("Undefined"))){
 			lock.lock();
@@ -96,5 +120,4 @@ public class RegisterListeners implements Runnable, NativeKeyListener, NativeMou
 		GlobalScreen.addNativeMouseMotionListener(obj);
 		GlobalScreen.addNativeMouseWheelListener(obj);
 	}
-
 }

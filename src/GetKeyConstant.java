@@ -18,7 +18,11 @@ public class GetKeyConstant {
             System.out.println(e);
         }
     }
-    public Integer getConstant(String str){
+    public int getConstant(String str){
+        if(str.equals("BackSpace")){
+            str = "BACK_SPACE";
+        }
+        str = str.replaceAll(" ", "_");
         String search = "VK_";
         search += str;
         if(logs.contains(search)){
