@@ -8,10 +8,14 @@ public class Player implements Runnable{
     private  StringBuilder stringBuilder= new StringBuilder() ;
     private String filePath;
     private File tempFile = null;
+    private String path;
+    Player(String path){
+        this.path = path;
+    }
     private GetKeyConstant obj = new GetKeyConstant();
     public void run(){
         try{
-            tempFile = new File(events.log);
+            tempFile = new File(path);
             reader = new FileReader(tempFile);
             if(tempFile.exists()){
                 int ch;
@@ -27,7 +31,7 @@ public class Player implements Runnable{
             long current=0;
             String vk;*/
             for(int i=0; i<events.length; i++){
-                Thread.sleep(500);
+                Thread.sleep(50);
                 event = events[i].split(" ");
                 if(event[0].equals("KeyPressed")){
                     //vk = "VK_"+event[1].toUpperCase();

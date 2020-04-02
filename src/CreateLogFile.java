@@ -13,8 +13,10 @@ public class CreateLogFile implements Runnable {
     private MouseReleasedData mouseReleased;;
     private MouseDraggedData mouseDragged;
     private MouseWheelMovedData mouseWheelMoved;
-    CreateLogFile(LinkedList < EventData > list) {
+    private String path;
+    CreateLogFile(LinkedList < EventData > list,String path) {
         this.list = list;
+        this.path = path;
     }
     public void run() {
         try {
@@ -51,8 +53,9 @@ public class CreateLogFile implements Runnable {
                     stringBuilder.append("\n");
                 }
             }
-            fw = new FileWriter("events.log");
+            fw = new FileWriter(path);
             fw.write(stringBuilder.toString());
+	    fw.flush();
         }catch(Exception e){   
         }
     }
